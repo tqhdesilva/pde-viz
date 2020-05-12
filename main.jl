@@ -1,6 +1,20 @@
 using Plots
 include("heat_equation.jl")
+include("wave_equation.jl")
 
+function plot(
+    d::Union{HeatEquation.HeatEquation1D,WaveEquation.WaveEquation1D},
+    solution::Array{Float64,2},
+    every::Integer = 1
+)::Plots.Animation
+    x = d.Δx:d.Δx:d.L - d.Δx
+    t = d.Δt:d.Δt:d.T - d.Δt
+    Nt = length(t)
+    anim = @animate for i = 1:Nt
+        Plots.plot(x, solution[:, i], ylims = (minimum(solution), maximum(solution)))
+    end when i % every == 0
+    return anim
+end
 
 # Heat Equation
 # Case 1:
@@ -13,7 +27,7 @@ function heatequation1()
         T = 30
     )
     solution = HeatEquation.solve(rod)
-    anim = HeatEquation.plot(rod, solution, 50)
+    anim = plot(rod, solution, 50)
     gif(anim, "./plots/heat_equation_case_1.gif")
 end
 
@@ -29,7 +43,7 @@ function heatequation2()
         T = 30
     )
     solution = HeatEquation.solve(rod)
-    anim = HeatEquation.plot(rod, solution, 50)
+    anim = plot(rod, solution, 50)
     gif(anim, "./plots/heat_equation_case_2.gif")
 end
 
@@ -44,10 +58,27 @@ function heatequation3()
         T = 30
     )
     solution = HeatEquation.solve(rod)
-    anim = HeatEquation.plot(rod, solution, 50)
+    anim = plot(rod, solution, 50)
     gif(anim, "./plots/heat_equation_case_3.gif")
+end
+
+
+function waveequation1()
+    string = WaveEquation.WaveEquation1D(
+    icₓ = x->0.0,
+    ic = x->sin(2.0 * π * x / 10.0),
+    leftBoundary = 0.0,
+    rightBoundary = 0.0,
+    L = 10.0,
+    T = 10.0,
+    Δt = 0.01
+)
+    sol = WaveEquation.solve(string)
+    anim = plot(string, sol, 10)
+    gif(anim, "./plots/wave_equation_case_1.gif")
 end
 
 heatequation1()
 heatequation2()
 heatequation3()
+waveequation1()

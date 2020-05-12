@@ -1,3 +1,4 @@
+module HeatEquation
 using Plots
 
 Base.@kwdef struct HeatEquation1D
@@ -45,11 +46,14 @@ function solve(d::HeatEquation1D)::Array{Float64,2}
 end
 
 
-function plot(d::HeatEquation1D, solution::Array{Float64,2}, every::Integer = 1)
+function plot(d::HeatEquation1D, solution::Array{Float64,2}, every::Integer = 1)::Plots.Animation
     x = d.Δx:d.Δx:d.L - d.Δx
     t = d.Δt:d.Δt:d.T - d.Δt
     Nt = length(t)
-    @gif for i = 1:Nt
+    anim = @animate for i = 1:Nt
         Plots.plot(x, solution[:, i], ylims = (minimum(solution), maximum(solution)))
     end when i % every == 0
+    return anim
+end
+
 end

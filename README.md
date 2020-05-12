@@ -27,4 +27,5 @@ The initial condition is 1 everywhere, with the boundaries set to 0.
 ## Wave Equation
 ### Case 1
 Standing sine wave.
+
 ![Case 1](./plots/wave_equation_case_1.gif)

@@ -34,5 +34,20 @@ function heatequation2()
 end
 
 
+# Case 3:
+# Non-uniform Dirichlet boundary conditions, uniform initial conditions.
+function heatequation3()
+    rod = HeatEquation.HeatEquation1D(
+        L = 10,
+        leftBoundary = 0,
+        rightBoundary = 1,
+        T = 30
+    )
+    solution = HeatEquation.solve(rod)
+    anim = HeatEquation.plot(rod, solution, 50)
+    gif(anim, "./plots/heat_equation_case_3.gif")
+end
+
 heatequation1()
 heatequation2()
+heatequation3()

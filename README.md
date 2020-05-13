@@ -2,7 +2,7 @@
 
 I made this repository to practice using Julia for solving and visualizing
 partial differential equations. Right now there is only code for solving the
-heat equation in 1D with Dirichlet boundary conditions.
+heat equation and wave equation in 1D with Dirichlet boundary conditions.
 
 After getting your Julia environment set up, run
 ```bash

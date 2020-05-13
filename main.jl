@@ -78,12 +78,6 @@ function waveequation1()
     gif(anim, "./plots/wave_equation_case_1.gif")
 end
 
-# TODO Convert to a first order system
-# and apply stiff solver.
-# This seems to be a stiff ODE.
-# There's a bug in DifferentialEquations.jl
-# that makes solving Dynamical ODEs(e.g. 2nd order ODE)
-# impossible.
 function waveequation2()
     wave = WaveEquation.WaveEquation1D(
         icₓ = x->-x,

@@ -31,6 +31,9 @@ Standing sine wave.
 ![Case 1](./plots/wave_equation_case_1.gif)
 
 ### Case 2
-uₜₜ = 4 uₓₓ
+uₜₜ = 4 uₓₓ,
+u(0, t) = u(1, t) = 0,
+uₓ(x, 0) = -x,
+u(x, 0) = x
 
 ![Case 2](./plots/wave_equation_case_2.gif)

@@ -31,7 +31,7 @@ function solve(d::WaveEquation1D)
             [0 for j = 1:Nₓ - i - 1]
         ]
     end
-    A = A .* (1 / d.Δx^2)
+    A = A .* (1 / d.Δx^2) .* d.c²
 
     function waveequation!(ddu, du, u, p, t)
         ddu[:] = A * u + [

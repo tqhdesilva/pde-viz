@@ -64,21 +64,39 @@ end
 
 
 function waveequation1()
-    string = WaveEquation.WaveEquation1D(
-    icₓ = x->0.0,
-    ic = x->sin(2.0 * π * x / 10.0),
-    leftBoundary = 0.0,
-    rightBoundary = 0.0,
-    L = 10.0,
-    T = 10.0,
-    Δt = 0.01
-)
-    sol = WaveEquation.solve(string)
-    anim = plot(string, sol, 10)
+    wave = WaveEquation.WaveEquation1D(
+        icₓ = x->0.0,
+        ic = x->sin(2.0 * π * x / 10.0),
+        leftBoundary = 0.0,
+        rightBoundary = 0.0,
+        L = 10.0,
+        T = 10.0,
+        Δt = 0.01
+    )
+    sol = WaveEquation.solve(wave)
+    anim = plot(wave, sol, 10)
     gif(anim, "./plots/wave_equation_case_1.gif")
 end
 
-heatequation1()
-heatequation2()
-heatequation3()
-waveequation1()
+function waveequation2()
+    wave = WaveEquation.WaveEquation1D(
+        icₓ = x->-x,
+        ic = x->x,
+        leftBoundary = 0.0,
+        rightBoundary = 0.0,
+        L = 1.0,
+        Δx = 0.01,
+        T = 2.0,
+        Δt = 0.0001,
+        c² = 4
+    )
+    sol = WaveEquation.solve(wave)
+    anim = plot(wave, sol, 200)
+    gif(anim, "./plots/wave_equation_case_2.gif")
+end
+
+# heatequation1()
+# heatequation2()
+# heatequation3()
+# waveequation1()
+waveequation2()

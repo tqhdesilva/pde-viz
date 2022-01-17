@@ -16,8 +16,8 @@ Base.@kwdef struct WaveEquation1D
 end
 
 function solve(d::WaveEquation1D)
-    x = d.Δx:d.Δx:d.L - d.Δx
-    t = d.Δt:d.Δt:d.T - d.Δt
+    x = d.Δx:d.Δx:d.L-d.Δx
+    t = d.Δt:d.Δt:d.T-d.Δt
     Nₓ = length(x)
     Nₜ = length(t)
     u₀ = d.ic.(x)
@@ -28,27 +28,27 @@ function solve(d::WaveEquation1D)
     A₂₂ = zeros(Nₓ, Nₓ)
 
     A₂₁ = zeros(Nₓ, Nₓ)
-    A₂₁[1, :] = [[-2, 1]; [0 for i = 1:Nₓ - 2]]
-    A₂₁[end, :] = [[0 for i = 1:Nₓ - 2]; [1, -2]]
-    for i = 2:Nₓ - 1
+    A₂₁[1, :] = [[-2, 1]; [0 for i = 1:Nₓ-2]]
+    A₂₁[end, :] = [[0 for i = 1:Nₓ-2]; [1, -2]]
+    for i = 2:Nₓ-1
         A₂₁[i, :] = [
-            [0 for j = 1:i - 2];
-            [1, -2, 1];
-            [0 for j = 1:Nₓ - i - 1]
+            [0 for j = 1:i-2]
+            [1, -2, 1]
+            [0 for j = 1:Nₓ-i-1]
         ]
     end
     A₂₁ = A₂₁ .* (1 / d.Δx^2) .* d.c²
 
     A = [
-        [A₁₁ A₁₂];
+        [A₁₁ A₁₂]
         [A₂₁ A₂₂]
     ]
 
     function waveequation!(du, u, p, t)
         du[:] = A * u + [
-            [d.leftBoundary];
-            [0 for i = 1:Nₓ - 2];
-            [d.rightBoundary];
+            [d.leftBoundary]
+            [0 for i = 1:Nₓ-2]
+            [d.rightBoundary]
             [0 for i = 1:Nₓ]
         ]
     end
@@ -60,7 +60,7 @@ function solve(d::WaveEquation1D)
     for (i, tᵢ) in enumerate(t)
         Uᵢ = sol(tᵢ)
         uᵢ = Uᵢ[1:Integer(length(Uᵢ) / 2)]
-        solarray[:, i + 1] = uᵢ
+        solarray[:, i+1] = uᵢ
     end
     return solarray
 end
